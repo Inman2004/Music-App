@@ -64,4 +64,38 @@ fan_speed.view()
 
 plt.show()
 
-Run the a
+Ex 2
+
+import numpy as np
+class DiscretePerceptron:
+ def __init__(self, input_size):
+ self.weights = np.random.rand(input_size)
+ self.bias = np.random.rand()
+ 
+ def predict(self, inputs):
+ weighted_sum = np.dot(inputs, self.weights) + self.bias
+ return 1 if weighted_sum > 0 else 0
+ 
+ def train(self, inputs, targets, learning_rate=0.1, epochs=100):
+ for epoch in range(epochs):
+ for i in range(len(inputs)):
+ prediction = self.predict(inputs[i])
+ error = targets[i] - prediction
+ self.weights += learning_rate * error * inputs[i]
+ self.bias += learning_rate * error
+
+ def main():
+ # Training data: XOR problem
+ inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+ targets = np.array([0, 1, 1, 0])
+ 
+ perceptron = DiscretePerceptron(input_size=2)
+ perceptron.train(inputs, targets, learning_rate=0.1, epochs=100)
+ 
+ # Testing
+ test_data = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+ for data in test_data:
+ prediction = perceptron.predict(data)
+ print(f"Input: {data}, Prediction: {prediction}")
+if __name__ == "__main__":
+ main()
